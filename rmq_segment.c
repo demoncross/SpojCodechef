@@ -1,0 +1,45 @@
+#include<stdio.h>
+#define sentinel 100000000
+int a[1000008];
+int tree[1<<21];
+void initialise(int i,int j,int node)
+{
+	if(i==j)
+	{
+		tree[node]=a[i];
+		return;	
+	}
+	initialise(i,(i+j)>>1,node<<1);
+	initialise(((i+j)>>1)+1,j,(node<<1)+1);
+	if(tree[node<<1]<tree[(node<<1)+1])
+		tree[node]=tree[node<<1];
+	else
+		tree[node]=tree[(node<<1)+1];
+}
+
+int query(int i,int j,int q_i,int q_j,int node)
+{
+	int q1,q2;
+	if(q_i>j || q_j<i)		return sentinel;
+	else if(i>=q_i && j<=q_j)	return tree[node];
+	q1=query(i,((i+j)>>1),q_i,q_j,node<<1);
+	q2=query(((i+j)>>1)+1,j,q_i,q_j,(node<<1)+1);
+	if(q1<q2)	return q1;
+	else		return q2;
+}
+int main()
+{
+	int n,i,j;
+	scanf("%d",&n);
+	for(i=0;i<n;i++)
+		scanf("%d",&a[i]);
+	initialise(0,n-1,1);
+	printf("ENTER QUERY:\n");
+	scanf("%d %d",&i,&j);
+	while(i!=-1)
+	{
+		printf("%d\n",query(0,n-1,i,j,1));
+		scanf("%d %d",&i,&j);
+	}
+	return 0;
+}

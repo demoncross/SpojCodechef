@@ -1,0 +1,28 @@
+#include<stdio.h>
+#include<string.h>
+int work(int n)
+{
+if(n==2)	return 1;
+else if(n==1)	return 1;
+else if(n%2==0)
+	return ((work(n/2)*2)-1);
+else 
+	return ((work(n/2)*2)+1);
+}
+int main()
+{
+int i,n;
+char str[5];
+while(1)
+{
+n=0;
+scanf(" %s",str);
+n=(str[0]-'0')*10 + (str[1]-'0');
+for(i=0;i<(str[3]-'0');i++)
+	n*=10;
+if(n==0)
+	break;
+printf("%d\n",work(n));
+}
+return 0;
+}

@@ -1,0 +1,57 @@
+#include<stdlib.h>
+#include<stdio.h>
+#define N 101
+#define MAX 327656	
+int a[N][N]={0};
+int z;
+void sort(int start,int end)
+{
+if(start>end) return;
+int key,i,j,k;
+key=a[z][end];
+k=start;
+for(i=start;i<end;i++)
+{
+if(a[z][i]<=key)
+{
+j=a[z][i];
+a[z][i]=a[z][k];
+a[z][k]=j;
+k++;
+}
+}
+j=a[z][end];
+a[z][end]=a[z][k];
+a[z][k]=j;
+sort(start,k-1);
+sort(k+1,end);
+}
+int main()
+{
+int i,j,test,n,m,ca,sum;
+int p[100],c[100];
+scanf("%d",&test);
+while(test-->0)
+{
+sum=0;
+scanf("%d %d",&n,&m);
+for(i=0;i<m;i++)	scanf("%d",&p[i]);
+for(z=0;z<n;z++)
+{scanf("%d",&ca);
+for(j=0;j<ca;j++)	scanf(" %d",&a[z][j]);
+c[z]=ca;
+sort(0,ca-1);
+}
+for(i=0;i<m;i++)
+{
+if(c[p[i]]==0)	sum+=0;
+else
+{
+sum+=a[p[i]][c[p[i]]-1];
+c[p[i]]--;
+}
+}
+printf("%d\n",sum);
+}
+return 0;
+}

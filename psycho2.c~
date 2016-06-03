@@ -1,0 +1,29 @@
+#include<stdio.h>
+int a[10000009]={1};
+#define max 10000007
+void sieve(void)
+{
+	FILE *f;
+	f=fopen("WOW.txt","w+");
+int i,j;
+for(i=0;i<=max;i++)	a[i]=1;
+for(i=2;i*i<=max;i++)
+{
+	if(a[i]==1)
+	{
+		for(j=i;j*i<=max;j++)
+		{
+			if(a[i*j]==1)	a[i*j]=i;
+		}
+	}
+}
+for(i=2;i<=max;i++)	fprintf(f,"%d,",a[i]);
+fclose(f);
+}
+int main()
+{
+int n,last,q,no,f,odd,even,test;
+sieve();
+return 0;
+}
+

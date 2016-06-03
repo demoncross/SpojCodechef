@@ -1,0 +1,89 @@
+#include<stdio.h>
+#include<math.h>
+#include<stdlib.h>
+typedef struct n
+{
+int x,y,i;
+}node; 
+node a[50009];
+
+void sort(int start,int end)
+{
+if(start>end) return;
+int i,k;
+node key,j;
+key=a[end];
+k=start;
+for(i=start;i<end;i++)
+{
+if(a[i].x<=key.x)
+{
+j=a[i];
+a[i]=a[k];
+a[k]=j;
+k++;
+}
+}
+j=a[end];
+a[end]=a[k];
+a[k]=j;
+sort(start,k-1);
+sort(k+1,end);
+}
+
+int main()
+{
+long long int d,d_min,d_min_x,d_min_y;
+int n,i,t,x_a,x_b,y_a,y_b,min_a,min_b;
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+	scanf("%d%d",&a[i].x,&a[i].y);
+	a[i].i=i;
+}
+sort(0,n-1);
+d_min_x=10000000000000000;
+for(i=1;i<n;i++)
+{
+	d=((long long int)(a[i-1].x-a[i].x)*(a[i-1].x-a[i].x))+((long long int)(a[i-1].y-a[i].y)*(a[i-1].y-a[i].y));
+	if(d<d_min_x)
+	{
+		d_min_x=d;
+		x_a=a[i-1].i;
+		x_b=a[i].i;
+	}	
+}
+for(i=0;i<n;i++)
+{
+	t=a[i].x;
+	a[i].x=a[i].y;
+	a[i].y=t;
+}
+sort(0,n-1);
+d_min_y=10000000000000000;
+for(i=1;i<n;i++)
+{
+	d=((long long int)(a[i-1].x-a[i].x)*(a[i-1].x-a[i].x))+((long long int)(a[i-1].y-a[i].y)*(a[i-1].y-a[i].y));
+	if(d<d_min_y)
+	{
+		d_min_y=d;
+		y_a=a[i-1].i;
+		y_b=a[i].i;
+	}	
+}
+if(d_min_x<d_min_y)
+{
+	d_min=d_min_x;
+	min_a=x_a;
+	min_b=x_b;
+}
+else
+{
+	d_min=d_min_y;
+	min_a=y_a;
+	min_b=y_b;
+}
+if(min_a<min_b)	printf("%d %d %.6f\n",min_a,min_b,sqrt(d_min));
+else		printf("%d %d %.6f\n",min_b,min_a,sqrt(d_min));
+return 0;
+}

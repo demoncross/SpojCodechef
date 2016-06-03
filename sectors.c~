@@ -1,0 +1,24 @@
+#include<stdio.h>
+int main()
+{
+int test,n,q,i,sum_odd,sum_even;
+scanf("%d",&test);
+while(test--)
+{
+	scanf("%d",&n);
+	sum_odd=sum_even=0;
+	for(i=1;i<=n;i++)
+	{
+		scanf("%d",&q);
+		if(i%2==1)	sum_odd+=q;
+		else		sum_even+=q;
+	}
+	if(n%2==1)	printf("NO\n");
+	else
+	{
+		if(sum_odd==sum_even)	printf("YES\n");
+		else			printf("NO\n");
+	}
+}
+return 0;
+}

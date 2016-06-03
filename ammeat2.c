@@ -1,0 +1,41 @@
+#include<stdio.h>
+#define n 777
+int main()
+{
+int a[n+1][n+2];
+int test,num,k,ad,l,i,j;
+scanf("%d",&test);
+while(test-->0)
+{
+l=1;
+scanf("%d %d",&num,&k);
+for(i=1;i<=num;i++)
+{
+ad=num-i+1;
+for(j=2;j*i<=num;j++)
+{
+a[i][j*i]=1;
+ad--;
+}
+a[i][num+1]=ad;
+if(ad>=k)
+{
+for(j=i;j<=num&&k>0;j++)
+{
+if(a[i][j]!=1)
+{
+printf("%d ",j);
+k--;
+}
+}
+l=0;
+printf("\n");
+break;
+}
+}
+if(l==1)
+printf("-1\n");
+}
+return 0;
+}
+

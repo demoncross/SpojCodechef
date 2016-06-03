@@ -1,0 +1,100 @@
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <queue>
+#include <cmath>
+#include <cstring>
+#include <iostream>
+#include <stack>
+#include <map>
+#include <vector>
+#define mod 23102009
+
+using namespace std;
+typedef long long int ll;
+
+char s1[1003],s2[1003];
+int f[1003][30],s[1003][30];
+pair<int,int> dp[1003][1003][30];// first has the no of seq starting with the char and LCS
+
+void clear_all(void)
+{
+	int l1,l2,i,j,x;
+	l1=strlen(s1);
+	l2=strlen(s2);
+	for(i=0;i<=l1+2;i++){
+		for(j=0;j<=l2+2;j++){
+			for(x=1;x<=28;x++)
+			{
+				dp[i][j][x].first=1;
+				dp[i][j][x].second=0;
+			}
+		}
+	}
+	for(i=0;i<=1000;i++)
+		for(j=0;j<=28;j++)	f[i][j]=s[i][j]=-1;
+}
+
+pair<int,int> work(void)
+{
+	int l1,l2,i,j,c,fir,sec;
+	l1=strlen(s1);
+	l2=strlen(s2);
+	for(i=l1-1;i>=0;i--)
+	{
+		for(c='a';c<='z';c++)
+		{
+			if(s1[i]==c)	f[i][c-'a']=i;
+	
+
+			else		f[i][c-'a']=f[i+1][c-'a'];
+		}
+	}
+	for(i=l2-1;i>=0;i--)
+	{
+		for(c='a';c<='z';c++)
+		{
+			if(s2[i]==c)	s[i][c-'a']=i;
+	
+
+			else		s[i][c-'a']=s[i+1][c-'a'];
+		}
+	}
+
+	for(i=l1-1;i>=0;i--)
+	{
+		for(j=l2-1;j>=0;j--)
+		{
+			for(c='a';c<='z';c++)
+			{
+				fir=f[i][c-'a'];
+				sec=s[j][c-'a'];
+				if(fir==-1 || sec==-1)	continue;
+				dp[i][j][c-'a'].first=dp[fir+1][sec+1][28].first;
+				dp[i][j][c-'a'].second=dp[fir+1][sec+1][28].second+1;
+				if(dp[i][j][c-'a'].second>dp[i][j][28].second)
+				{
+					dp[i][j][28].second=dp[i][j][c-'a'].second;
+					dp[i][j][28].first=dp[i][j][c-'a'].first;
+				}
+				else if(dp[i][j][c-'a'].second==dp[i][j][28].second)
+					dp[i][j][28].first=(dp[i][j][28].first+dp[i][j][c-'a'].first)%mod;
+			}
+		}
+	}	
+	return dp[0][0][28];
+}
+
+int main()
+{
+	int test;
+	scanf("%d",&test);
+	while(test--)
+	{
+		scanf(" %s %s",s1,s2);
+		clear_all();
+		pair<int,int>x=work();
+		printf("%d %d\n",x.second,x.first);
+	}
+	return 0;
+}

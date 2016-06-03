@@ -1,0 +1,25 @@
+#include<stdio.h>
+int main()
+{
+long long int ans,n,l,test;
+scanf("%lld",&test);
+while(test-->0)
+{
+ans=1;
+l=0;
+scanf(" %lld",&n);
+while((ans<<1)=<n)
+{
+ans=ans<<1;
+l++;
+}
+ans=1;
+while(l>0)
+{
+ans=ans<<1;
+l--;
+}
+printf("%lld\n",ans);
+}
+return 0;
+}

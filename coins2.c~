@@ -1,0 +1,44 @@
+
+     
+    unsigned long key[30][20];
+     
+    long maxDollars(unsigned long n, int k2, int k3)
+    {
+    if (n <= 1) return n;
+     
+    if (key[k2][k3]) return key[k2][k3];
+     
+    unsigned long exchange =
+    maxDollars(n/2, k2+1, k3) + maxDollars(n/3, k2, k3+1) + maxDollars(n/4, k2+2, k3);
+     
+    key[k2][k3] = exchange;
+     
+    if (exchange > n) return exchange;
+     
+    key[k2][k3] = n;
+     
+    return n;
+    }
+     
+    void init_KEY()
+    {
+    int i, j;
+     
+    for (i=0; i<30; i++)
+    for (j=0; j<20; j++)
+    key[i][j] = 0;
+    }
+     
+    int main()
+    {
+    unsigned long n;
+     
+    while ((scanf("%lu",&n))!=EOF)
+    {
+    init_KEY();
+     
+    printf("%lu\n",maxDollars(n, 0, 0));
+    }
+     
+    return 0;
+    }

@@ -1,0 +1,54 @@
+#include<stdio.h>
+typedef unsigned long long int ll;
+//int array[100005];
+ll a[1000];
+int j=0;
+int check(int i)
+{
+	ll q,d;
+	q=(ll)i*(ll)i;
+	while(q>0)
+	{
+		d=q%10;
+		if(d==0 || d==1 || d==4 || d==9)
+			q=q/10;
+		else
+			return 0;
+	}
+	return 1;
+}
+void work(void)
+{
+	int i;
+	for(i=0;i<=100000;i++)
+	{
+		if(check(i))
+		{
+			a[j]=(ll)i*(ll)i;
+			j++;		
+		}
+	}
+	//printf("**%d\n",j);
+}
+int ans(ll x,ll y)
+{
+	int i,ans=0;
+	for(i=0;i<j;i++)
+	{
+		if(a[i]>=x && a[i]<=y)
+			ans++;
+	}
+	return ans;
+}
+int main()
+{
+	ll x,y,t,i;
+	work();
+	scanf("%lld",&t);
+	while(t--)
+	{
+		scanf("%lld%lld",&x,&y);
+		printf("%d\n",ans(x,y));	
+	}
+	return 0;
+}

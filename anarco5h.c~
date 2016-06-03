@@ -1,0 +1,35 @@
+#include<stdio.h>
+#include<string.h>
+int sum[30];
+int l;
+int work(int end,int limit)
+{
+//if(end==0)	return 0;
+int i,sum_r,sum_l;
+int ans=(sum[end+1]<=limit)?1:0;
+for(i=end-1;i>=0;i--)
+{
+sum_r=sum[end+1]-sum[i+1];
+sum_l=sum[i+1];
+if(ssum_r<=limit)
+	ans+=work(i,sum_r);
+}
+return ans;
+}
+int main()
+{
+char str[30];
+int i,t;
+t=1;
+while(t)
+{
+scanf(" %s",str);
+if(strcmp(str,"bye")==0)	break;
+l=strlen(str);
+for(i=0;i<l;i++)
+	sum[i+1]=sum[i]+str[i]-'0';
+printf("%d. %d\n",t,work(l-1,100));
+t++;
+}
+return 0;
+}

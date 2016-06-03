@@ -1,0 +1,26 @@
+#include<stdio.h>
+int w(int n)
+{
+	int ans=0;
+	while(n)
+	{
+		ans<<=1;
+		if(n%2)
+		{
+			ans+=1;
+		}
+		n/=2;
+	}
+	return ans;
+}
+int main()
+{
+int n;
+scanf("%d",&n);
+while(n!=-1)
+{
+	printf("%d\n",w(n));
+	scanf("%d",&n);
+}
+return 0;
+}

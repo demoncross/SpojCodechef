@@ -1,0 +1,109 @@
+#include<stdio.h>
+#include<string.h>
+#define sentinel 50004
+typedef struct n
+{
+char l[15];
+int p;
+}node;
+node a[50005];
+
+
+int tree[(1<<17)+5];
+void initialise(int i,int j,int node)
+{
+	if(i==j)
+	{
+		tree[node]=i;
+		return;	
+	}
+	initialise(i,(i+j)>>1,node<<1);
+	initialise(((i+j)>>1)+1,j,(node<<1)+1);
+	if(a[tree[node<<1]].p>=a[tree[(node<<1)+1]].p)
+		tree[node]=tree[node<<1];
+	else
+		tree[node]=tree[(node<<1)+1];
+}
+
+int query(int i,int j,int q_i,int q_j,int node)
+{
+	int q1,q2;
+	if(q_i>j || q_j<i)		return sentinel;
+	else if(i>=q_i && j<=q_j)	return tree[node];
+	q1=query(i,((i+j)>>1),q_i,q_j,node<<1);
+	q2=query(((i+j)>>1)+1,j,q_i,q_j,(node<<1)+1);
+	if(a[q1].p>a[q2].p)	return q1;
+	else		return q2;
+}
+
+
+void sort(int start,int end)
+{
+if(start>end) return;
+int i,k;
+char *key;
+node j;
+key=a[end].l;
+k=start;
+for(i=start;i<end;i++)
+{
+	if(strcmp(a[i].l,key)<=0)
+	{
+		j=a[i];
+		a[i]=a[k];
+		a[k]=j;
+		k++;
+	}
+}
+j=a[end];
+a[end]=a[k];
+a[k]=j;
+sort(start,k-1);
+sort(k+1,end);
+}
+
+
+int max(int start,int end,int n)
+{/*
+int i,max=start;
+for(i=start+1;i<=end;i++)
+{
+	if(a[i].p>a[max].p)	max=i;
+}
+return max;*/
+return (query(0,n-1,start,end,1));
+}
+
+
+void make(int start,int end,int n)
+{
+int t;
+if(end<start)	return;
+t=max(start,end,n);
+printf("(");
+make(start,t-1,n);
+printf("%s/%d",a[t].l,a[t].p);
+make(t+1,end,n);
+printf(")");
+}
+
+
+int main()
+{
+int n,i,p,j;
+scanf("%d",&n);
+while(n)
+{
+	a[50004].p=-10000;
+	for(i=0;i<n;i++)
+	{
+		scanf("%[^/]/%d",a[i].l,&a[i].p);
+	}	
+	sort(0,n-1);
+	initialise(0,n-1,1);
+	make(0,n-1,n);
+	printf("\n");
+	scanf("%d",&n);
+}
+return 0;
+}

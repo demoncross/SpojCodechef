@@ -1,0 +1,14 @@
+#include<stdio.h>
+int main()
+{
+float l,r,pi,a;
+pi=22/7;
+scanf("%f",&l);
+while(l)
+{
+	a=(l*l)/(2*pi);
+	printf("%.2f\n",a);
+	scanf("%f",&l);
+}
+return 0;
+}

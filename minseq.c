@@ -1,0 +1,37 @@
+#include<stdio.h>
+#include<string.h>
+char a[1000005];
+char b[1000005];
+int main()
+{
+int i,k,l1,l2;
+while(scanf("%s",a)!=EOF)
+{
+	scanf("%s",b);
+	l1=strlen(a);
+	l2=strlen(b);
+	k=0;
+	for(i=0;i<l1;i++)
+	{
+		if(a[i]>b[k])
+		{
+			printf("%s",b);
+			printf("%s",&a[i]);
+			printf("\n");
+			break;
+		}
+		else if(a[i]==b[k])
+		{
+			if(strcmp(&a[i],b)>0)
+			{
+				printf("%s%s\n",b,&a[i]);
+				break;
+			}
+		}
+		printf("%c",a[i]);
+	}
+	if(i==l1)
+		printf("%s\n",b);
+}
+return 0;
+}

@@ -1,0 +1,81 @@
+#include<stdio.h>
+#define max 10005
+#define max_t 1000009
+typedef long long int ll;
+ll dp[max_t][2];
+typedef struct to
+{
+int s,e,p;
+}t;
+t a[max];
+void sort(int start,int end)
+{
+if(start>end) return;
+int key,i,k;
+t j;
+key=a[end].s;
+k=start;
+for(i=start;i<end;i++)
+{
+if(a[i].s<=key)
+{
+j=a[i];
+a[i]=a[k];
+a[k]=j;
+k++;
+}
+}
+j=a[end];
+a[end]=a[k];
+a[k]=j;
+sort(start,k-1);
+sort(k+1,end);
+}
+int main()
+{
+int i,j,test,n,t,put,take;
+ll q1;
+ll q2;
+ll ma;
+scanf("%d",&test);
+while(test--)
+{
+	scanf(" %d",&n);
+	for(i=0;i<n;i++)
+	{	scanf(" %d %d %d",&a[i].s,&a[i].e,&a[i].p);  a[i].e+=a[i].s;
+	sort(0,n-1);
+	for(t=0;t<a[0].e;t++)
+		dp[t][0]=0;
+	for(t=a[0].e;t<=max_t;t++)
+		dp[t][0]=a[0].p;
+	put=1;
+	take=0;
+	for(i=2;i<=n;i++)
+	{
+		for(t=0;t<=max_t;t++)
+		{
+			if(t<a[i].e)
+				dp[t][put]=dp[t][take];
+			else
+			{
+				q1=dp[t][take];
+				q2=dp[a[i].s][take]+a[i].p;
+				if(q1>q2)
+					dp[t][put]=q1;
+				else
+					dp[t][put]=q2;
+			}
+		}
+		take^=1;
+		put^=1;
+	}
+	ma=0;
+	for(i=0;i<=max_t;i++)
+	{
+		if(dp[i][take]>ma)
+			ma=dp[i][take];
+	}
+	printf("%lld\n",ma);
+}
+return 0;
+}

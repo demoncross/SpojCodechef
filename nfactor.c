@@ -1,0 +1,42 @@
+#include<stdio.h>
+#define max 1000009
+typedef struct bb
+{
+	int array[11];
+}node;
+int a[max];
+node w[max];
+int main()
+{
+int i,j,n,m,test,k,x,y;
+for(i=0;i<max;i++)	a[i]=0;
+for(i=0;i<=19;i++)	w[0].array[i]=0;
+w[1]=w[0];
+w[1].array[0]++;
+for(i=2;i<max;i++)
+{
+	if(a[i]==0)
+	{
+		for(j=1;j*i<=max;j++)
+			a[i*j]++;
+	}
+	
+}
+for(i=2;i<max;i++)
+{
+	w[i]=w[i-1];
+	w[i].array[a[i]]=w[i].array[a[i]]+1;
+}
+scanf("%d",&test);
+while(test--)
+{
+	scanf("%d%d%d",&x,&y,&n);
+	printf("%d\n",w[y].array[n]-w[x-1].array[n]);
+}/*
+printf("%d\n",a[4]);
+for(i=1;i<=10;i++)
+{
+	printf("\n");
+}*/
+return 0;
+}

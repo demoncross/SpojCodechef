@@ -1,0 +1,25 @@
+#include<stdio.h>
+#include<string.h>
+int main()
+{
+int ans,i,l,phase;
+char s[510],t[510];
+while(1)
+{
+	ans=0;phase=0;
+	scanf("%s%s",s,t);
+	if(s[0]=='*')	break;
+	l=strlen(s);
+	for(i=0;i<l;i++)
+	{
+		if(s[i]!=t[i] && phase==0)
+		{
+			phase=1;
+			ans++;
+		}
+		if(s[i]==t[i]) phase=0;
+	}
+	printf("%d\n",ans);
+}
+retrun 0;
+}

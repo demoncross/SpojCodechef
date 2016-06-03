@@ -1,0 +1,30 @@
+#include<stdio.h>
+int a[1005];
+int main()
+{
+int i,n,avg,sum,ans;
+scanf("%d",&n);
+while(n!=-1)
+{
+	sum=0;
+	for(i=0;i<n;i++)
+	{
+		scanf("%d",&a[i]);	sum+=a[i];
+	}
+	if(sum%n)
+	{
+		printf("-1\n");
+		scanf("%d",&n);
+		continue;
+	}
+	avg=sum/n;
+	ans=0;
+	for(i=0;i<n;i++)
+	{
+		if(a[i]<avg)	ans+=(avg-a[i]);
+	}
+	printf("%d\n",ans);
+	scanf("%d",&n);
+}
+return 0;
+}

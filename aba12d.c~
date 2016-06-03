@@ -1,0 +1,35 @@
+#include<stdio.h>
+int a[1000009];
+void make(void)
+{
+int i,j;
+for(i=0;i<1000009;i++)
+	a[i]=1;
+for(i=2;i<=1000000;i++)
+{
+	for(j=1;j*i<=1000008;j++)
+	{
+		a[j*i]+=i;
+	}
+}
+}
+int main()
+{
+int test,x,y,i,ans;
+make();
+/*scanf("%d",&test);
+while(test--)
+{
+	scanf("%d %d",&x,&y);
+	ans=0;
+	for(i=x;i<=y;i++)
+	{
+		if(a[a[i]]==a[i]+1)	ans++;
+	}
+	printf("%d\n",ans);
+}*/
+//for(i=1;i<=100;i++)	printf("%d ",a[i]);
+scanf("%d",&i);
+printf("%d",a[a[i]]==a[i]+1);
+return 0;
+}

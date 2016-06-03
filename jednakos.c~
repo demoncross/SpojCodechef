@@ -1,0 +1,44 @@
+#include<string.h>
+#include<stdio.h>
+
+int min(int a,int b)
+{
+	return (a<b?a:b);
+}
+
+int dp[1005][5005];
+char s[1005];
+int main()
+{
+int val,i,j,k,l,t,len;
+scanf(" %[^=]=%d",s,&val);
+len=strlen(s);
+for(i=0;i<1005;i++)
+{
+	for(j=0;j<5005;j++)	dp[i][j]=100000000;
+}
+dp[1][s[0]-'0']=0;
+dp[0][0]=-1;
+for(i=2;i<=len;i++)
+{
+	for(j=1;j<=val;j++)
+	{
+		t=0;l=0;
+		k=1;
+		while(t<=j && l<=4)
+		{
+			if(t!=0)
+			dp[i][j]=min(dp[i][j],dp[i-l][j-t]+1);
+			else
+			dp[i][j]=min(dp[i][j],dp[i-l][j-t]);
+			t+=(s[i-l-1]-'0')*k;
+			l++;
+			k*=10;
+		}
+	}
+}
+//printf("%d %d %d\n",dp[2][14],dp[4][45],dp[4][45]);
+printf("%d\n",dp[len][val]);
+return 0;
+}
+

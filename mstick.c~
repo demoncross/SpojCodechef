@@ -1,0 +1,102 @@
+#include<stdio.h>
+#define MIN -100000
+#define MAX 100000000
+int a[100001]={0};
+int dpmax[100001][20];
+int dpmin[100001][20];
+int n;
+float max(float z,float x)
+{
+if(z>x) return z;
+else return x;
+}
+void createmax(void);
+void createmin(void);
+int querymax(int l,int r);
+int querymin(int l,int r);
+int main()
+{
+int i,test,l,r,m,m2,m3;
+float mo;
+scanf("%d",&n);
+for(i=0;i<n;i++) scanf(" %d",&a[i]);
+createmax();
+createmin();
+scanf("%d",&test);
+while(test-->0)
+{
+scanf("%d %d",&l,&r);
+m=querymin(l,r);
+m2=querymax(l,r);
+m3=max(querymax(0,l-1),querymax(r+1,n-1));
+//printf("%d %d %d\n",m,m2,m3);
+printf("%0.1f\n",(float)((float)m+(float)(m2-m)/2));
+mo=max(m3+m,(float)((float)m+(float)(m2-m)/2));
+printf("%.1f\n",mo);
+}
+return 0;
+}
+
+
+
+void createmin(void)
+{
+int i,j;
+for(i=0;i<n;i++)
+dpmin[i][0]=i;
+for(j=1;1<<j<=n;j++)
+{
+for(i=0;(i+(1<<j)-1)<n;i++)
+{
+if(a[dpmin[i][j-1]]<=a[dpmin[i+(1<<(j-1))][j-1]])
+dpmin[i][j]=dpmin[i][j-1];
+else
+dpmin[i][j]=dpmin[i+(1<<(j-1))][j-1];
+}
+}
+}
+
+int querymin(int l,int r)
+{
+if(l>r||l<0||r<0) return MAX;
+int i,m,b,j,c;
+j=0;
+while((l+(1<<j)-1)<=r) j++;
+m=l+(1<<(j-1))-1;
+b=0;
+while((r-(1<<b))>=m) b++;
+c=r-(1<<b)+1;
+if(a[dpmin[l][j-1]]<=a[dpmin[c][b]]) return a[dpmin[l][j-1]];
+return a[dpmin[c][b]];
+}
+
+void createmax(void)
+{
+int i,j;
+for(i=0;i<n;i++)
+dpmax[i][0]=i;
+for(j=1;1<<j<=n;j++)
+{
+for(i=0;(i+(1<<j)-1)<n;i++)
+{
+if(a[dpmax[i][j-1]]>=a[dpmax[i+(1<<(j-1))][j-1]])
+dpmax[i][j]=dpmax[i][j-1];
+else
+dpmax[i][j]=dpmax[i+(1<<(j-1))][j-1];
+}
+}
+}
+
+int querymax(int l,int r)
+{
+if(l>r||r<0||l<0) return MIN;
+int i,m,b,j,c;
+j=0;
+while((l+(1<<j)-1)<=r) j++;
+m=l+(1<<(j-1))-1;
+b=0;
+while((r-(1<<b))>=m) b++;
+c=r-(1<<b)+1;
+if(a[dpmax[l][j-1]]>=a[dpmax[c][b]]) return a[dpmax[l][j-1]];
+return a[dpmax[c][b]];
+}
